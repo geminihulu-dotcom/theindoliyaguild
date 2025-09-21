@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Indoliya Guild</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --glow-color: #6366f1;
+      }
+
+      body {
+        font-family: 'Cinzel', serif;
+        background-color: #02000c;
+        color: #e0e0e0;
+        overflow-x: hidden;
+      }
+
+      #root {
+        position: relative;
+        z-index: 1;
+      }
+      
+      /* Particle Background */
+      #particle-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        overflow: hidden;
+        background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      }
+
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+        background: #4f46e5;
+        opacity: 0;
+        animation: rise 10s infinite linear;
+      }
+      
+      @keyframes rise {
+        0% {
+          transform: translateY(100vh) scale(0.5);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-10vh) scale(1.2);
+          opacity: 0;
+        }
+      }
+
+      /* Title Glow Animation */
+      @keyframes title-glow {
+        0%, 100% {
+          text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--glow-color), 0 0 30px var(--glow-color), 0 0 40px var(--glow-color), 0 0 55px var(--glow-color), 0 0 75px var(--glow-color);
+        }
+        50% {
+          text-shadow: 0 0 6px #fff, 0 0 12px #fff, 0 0 24px var(--glow-color), 0 0 36px var(--glow-color), 0 0 48px var(--glow-color), 0 0 66px var(--glow-color), 0 0 90px var(--glow-color);
+        }
+      }
+      .title-glow-animation {
+        animation: title-glow 4s ease-in-out infinite;
+      }
+      
+      /* Card Entry Animation */
+      @keyframes card-fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(30px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      .card-animate {
+        animation: card-fade-in 0.6s ease-out forwards;
+        opacity: 0;
+      }
+
+      /* Card Border and Hover Effects */
+      .card-wrapper {
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+      .card-content {
+        background: #101021;
+        border: 1px solid #1e1b4b;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s;
+      }
+
+      .card-wrapper:hover .card-content {
+        box-shadow: 0px 20px 40px rgba(0,0,0,0.4);
+      }
+      
+      .card-content::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0.5rem;
+        border: 2px solid transparent;
+        background: conic-gradient(from var(--angle), #1e1b4b, #4f46e5, #a5b4fc, #4f46e5, #1e1b4b) border-box;
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box, 
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        animation: rotate-border 6s linear infinite;
+        opacity: 0.4;
+        transition: opacity 0.3s;
+      }
+
+      .card-wrapper:hover .card-content::before {
+        opacity: 1;
+        animation-duration: 3s;
+      }
+
+      @property --angle {
+        syntax: '<angle>';
+        initial-value: 0deg;
+        inherits: false;
+      }
+
+      @keyframes rotate-border {
+        to { --angle: 360deg; }
+      }
+
+    </style>
+    <script type="importmap">
+  {
+    "imports": {
+      "react/": "https://aistudiocdn.com/react@^19.1.1/",
+      "react": "https://aistudiocdn.com/react@^19.1.1",
+      "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+      "@google/genai": "https://aistudiocdn.com/@google/genai@^1.20.0"
+    }
+  }
+  </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <audio id="background-music" loop>
+      <source src="https://assets.mixkit.co/music/preview/mixkit-deep-meditation-109.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="hover-sound">
+      <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_22d7a2bdd2.mp3" type="audio/mpeg">
+    </audio>
+     <audio id="awakening-sound">
+      <source src="https://cdn.pixabay.com/download/audio/2022/10/28/audio_673245c37c.mp3" type="audio/mpeg">
+    </audio>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
